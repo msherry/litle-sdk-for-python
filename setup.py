@@ -10,10 +10,10 @@ setup(name='LitleSdkPython',
       url='http://www.litle.com/developers',
       packages=['litleSdkPython'],
       install_requires=[
-          'pyxb_114',
+          'pyxb',
       ],
       dependency_links=[
-          'https://github.com/msherry/PyXB-1.1.4/tarball/master#egg=pyxb_114',
+          'https://github.com/msherry/PyXB-1.1.4/tarball/master#egg=pyxb',
       ],
       classifiers=[
           'Development Status :: 5 - Production/Stable',
