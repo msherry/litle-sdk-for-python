@@ -9,6 +9,7 @@ import pyxb_114.binding.saxer
 import StringIO
 import pyxb_114.utils.utility
 import pyxb_114.utils.domutils
+import re
 import sys
 import xml.dom
 
@@ -29,9 +30,21 @@ def CreateFromDocument (xml_text, default_namespace=None, location_base=None):
         dom = pyxb_114.utils.domutils.StringToDOM(xml_text)
         return CreateFromDOM(dom.documentElement)
 
+illegal_chars = re.compile(ur'[^\x09\x0A\x0D\x20-\xD7FF\xE000-\xFFFD]')
+def strip_illegal_xml(ss):
+    # http://www.w3.org/TR/2000/WD-xml-2e-20000814#dt-character
+    # https://stackoverflow.com/questions/4513672/python-escaping-non-ascii-characters-in-xml
+    def replacer(m):
+        return ''
+    return re.sub(illegal_chars, replacer, ss)
 
+def stripped_setattr(self, name, value):
+    if value and isinstance(value, basestring):
+        value = strip_illegal_xml(value)
+    super(pyxb_114.binding.basis._TypeBinding_mixin, self).__setattr__(
+        name, value)
 
-
+pyxb_114.binding.basis._TypeBinding_mixin.__setattr__  = stripped_setattr
 
 
 def CreateFromDOM (node, default_namespace=None):
