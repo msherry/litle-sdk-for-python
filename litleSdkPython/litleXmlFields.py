@@ -40,7 +40,7 @@ def strip_illegal_xml(ss):
 def stripped_setattr(self, name, value):
     if value and isinstance(value, basestring):
         value = strip_illegal_xml(value)
-    super(pyxb_114.binding.basis._TypeBinding_mixin, self).__setattr__(
+    super(pyxb.binding.basis._TypeBinding_mixin, self).__setattr__(
         name, value)
 
 pyxb.binding.basis._TypeBinding_mixin.__setattr__  = stripped_setattr
